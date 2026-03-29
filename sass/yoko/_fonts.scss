@@ -1,0 +1,94 @@
+@charset "UTF-8";
+
+/* Commissioner */
+
+@font-face {
+  font-family: 'Commissioner';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400 700;
+  src: url(./fonts/Commissioner/Commissioner-VariableFont_FLAR,VOLM,slnt,wght.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Commissioner';
+  font-style: italic;
+  font-weight: 400 700;
+  src: url(./fonts/Commissioner/Commissioner-VariableFont_FLAR,VOLM,slnt,wght.ttf) format('truetype');
+}
+
+/* GothicA1 */
+
+@font-face {
+    font-family: 'Gothic A1';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 400;
+    src: url(./fonts/GothicA1/GothicA1-Regular.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Gothic A1';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 700;
+    src: url(./fonts/GothicA1/GothicA1-Bold.ttf) format('truetype');
+}
+
+/* Noto Sans CJK jp */
+@font-face {
+    font-family: 'Noto Sans CJK jp';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 400;
+    src: url(./fonts/NotoSansCJKjp/NotoSansCJKjp-VF.otf) format('otf');
+}
+
+@font-face {
+    font-family: 'Noto Sans CJK jp';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 700;
+    src: url(./fonts/NotoSansCJKjp/NotoSansCJKjp-VF.otf) format('otf');
+}
+
+/* 約物用フォント（約猫フォント） https://tama-san.com/yakucalt-font/ */
+
+@font-face {
+    font-family: 'Yakumono';
+    src: url(./fonts/YakuCalt/YakuCaltGothic-R.woff) format("woff");
+}
+
+/* 等幅フォント・絵文字用（Cicaフォント） https://github.com/miiton/Cica */
+
+@font-face {
+    font-family: 'Cica';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 700;
+    src: url(./fonts/Cica/Cica-Bold.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Cica';
+    font-style: Italic;
+    font-display: swap;
+    font-weight: 700;
+    src: url(./fonts/Cica/Cica-BoldItalic.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Cica';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 400;
+    src: url(./fonts/Cica/Cica-Regular.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Cica';
+    font-style: Italic;
+    font-display: swap;
+    font-weight: 400;
+    src: url(./fonts/Cica/Cica-RegularItalic.ttf) format('truetype');
+}

@@ -1,0 +1,134 @@
+# upLaTexによるPDF用設定ファイル
+# 元々の設定ファイルから項目を継承する
+inherit: ["config.yml"]
+
+# 印刷所
+prt: ○○印刷所
+
+# 表紙を作る場合はコメントを外す。
+# コメントアウトした場合は表紙は作られない。
+# cover: cover.tex
+
+# 裏表紙を作る場合はコメントを外す。
+# コメントアウトした場合は裏表紙は作られない。
+# backcover: backcover.tex
+
+# 大扉は作る
+titlepage: true
+
+# 大扉で画像を使う場合はコメントを外す。
+# コメントアウトした場合はupLaTexによる大扉となる。
+# titlefile: title.tex
+
+# 奥付はデフォルトのものを使う
+colophon: true
+
+# LaTeX用のスタイルファイル(styディレクトリ以下に置くこと)
+texstyle: ["reviewmacro"]
+
+# LaTeX用のdocumentclassを指定する
+# オプションについてはsty/README.mdを参照
+# デフォルトは印刷用。電子配布版を作るには media=ebook とする
+texdocumentclass: ["review-jlreq", "media=print,paper=a6,fontsize=8pt,baselineskip=1.4,head_space=17mm,foot_space=15mm,gutter=18mm,fore_edge=12mm,serial_pagination=true,hiddenfolio=shippo,startpage=3,tate,twoside,onecolumn,openany"] # 印刷用
+# texdocumentclass: ["review-jlreq", "media=ebook,paper=a6,fontsize=8pt,baselineskip=1.4,head_space=17mm,foot_space=15mm,gutter=18mm,fore_edge=12mm,serial_pagination=true,tate,twoside,onecolumn"] # 電子配布用
+
+# LaTeX用のdvi変換コマンドのオプションを指定する。変換が遅い場合は`-d 5 -z 3`等にする
+# dvioptions: "-d 5 -z 9"
+dvioptions: "-d 5 -z 9 -r 600"
+
+# 以下のパラメータを有効にするときには、
+# pdfmaker:
+#    パラメータ: 値
+#    パラメータ: 値
+#   ...
+# という構成にする必要がある(インデントさせる)
+#
+pdfmaker:
+  #
+  # TeX版で利用する表紙画像。
+  # 仕上がりサイズ+塗り足し3mmありのPDFまたはIllustratorファイル（PDF互換オプション付き）を推奨。
+  # 拡縮はされず「そのまま」貼り付けられる
+  coverimage: null
+  #
+  # TeXコンパイル前に実行するプログラム。変換後のTeXソースを調整したいときに使用する。
+  # 渡される引数1=作業用展開ディレクトリ、引数2=呼び出しを実行したディレクトリ
+  # hook_beforetexcompile: null
+  #
+  # 索引処理前に実行するプログラム。idxファイルを加工したいときなどに使用する。
+  # 渡される引数1=作業用展開ディレクトリ、引数2=呼び出しを実行したディレクトリ
+  # hook_beforemakeindex: null
+  #
+  # 索引処理後に実行するプログラム。indファイルを加工したいときなどに使用する。
+  # 渡される引数1=作業用展開ディレクトリ、引数2=呼び出しを実行したディレクトリ
+  # hook_aftermakeindex: null
+  #
+  # ひととおりのコンパイル後に実行するプログラム。目次を加工して再度コンパイルしたいときなどに使用する。
+  # 渡される引数1=作業用展開ディレクトリ、引数2=呼び出しを実行したディレクトリ
+  # hook_aftertexcompile: null
+  #
+  # PDF(__REVIEW_BOOK__.pdf)作成後に実行するプログラム。PDFに加工を施したいときに使用する。
+  # 渡される引数1=作業用展開ディレクトリ、引数2=呼び出しを実行したディレクトリ
+  # hook_afterdvipdf: null
+  #
+  # 画像のscale=X.Xという指定を画像拡大縮小率からページ最大幅の相対倍率に変換する
+  # image_scale2width: true
+  #
+  # 画像のデフォルトのサイズを、版面横幅合わせではなく、原寸をそのまま利用する
+  # use_original_image_size: null
+  #
+  # PDFやIllustratorファイル(.ai)の画像のBoudingBoxの抽出に指定のボックスを採用する
+  # cropbox(デフォルト), mediabox, artbox, trimbox, bleedboxから選択する。
+  # Illustrator CC以降のIllustratorファイルに対してはmediaboxを指定する必要がある
+  # bbox: mediabox
+  #
+  # 索引を作成するか。trueにすると索引作成が有効になる
+  # makeindex: null
+  makeindex: true
+  # 索引作成コマンド
+  # makeindex_command: mendex
+  # 索引作成コマンドのオプション
+  # makeindex_options: "-f -r -I utf8"
+  # 索引作成コマンドのスタイルファイル
+  makeindex_sty: index.ist
+  # 索引作成コマンドの辞書ファイル
+  # makeindex_dic: null
+  makeindex_dic: sakuin.dic
+  # MeCabによる索引読み探索を使うか
+  makeindex_mecab: true
+  # MeCabの読みの取得オプション
+  makeindex_mecab_opts: "-Oyomi"
+  # 奥付を作成するか。trueを指定するとデフォルトの奥付、ファイル名を指定するとそれがcolophon.htmlとしてコピーされる
+  colophon: true
+  # 表紙挿入時に表紙のページ番号名を「cover」とし、偶数ページ扱いにして大扉前に白ページが入るのを防ぐ。デフォルトはtrue
+  # use_cover_nombre: true
+  #
+  # 囲み表現の切り替え設定
+  # column, note, memo, tip, info, warning, important, caution, noticeを設定可
+  # styleはreview-tcbox.styまたは独自に作成したスタイルで定義済みの囲みスタイル名
+  # optionsはキャプションなし囲みに対するtcolorboxの追加・上書きオプション
+  # options_with_captionはキャプション付き囲みのtcolorboxの追加・上書きオプション（省略した場合はoptionsと同じ）
+  #
+  boxsetting:
+    column:
+      style: marker
+    note:
+      style: marker
+    memo:
+      style: marker
+    tip:
+      style: marker
+    info:
+      style: marker
+    warning:
+      style: marker
+    important:
+      style: marker
+    caution:
+      style: marker
+    notice:
+      style: marker
+  #     style: squarebox
+  #     options: "colback=black!5!white"
+  #     options_with_caption: "colbacktitle=black!25!white"
+  #
+  # pdfmaker:階層を使うものはここまで

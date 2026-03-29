@@ -1,0 +1,21 @@
+{
+    "recommendations": [
+        "atsushieno.language-review",
+        "3w36zj6.textlint",
+        "8amjp.charactercount",
+        "mhutchie.git-graph",
+        "donjayamanne.githistory",
+        "felipecaputo.git-project-manager",
+        "github.vscode-pull-request-github",
+        "ms-ceintl.vscode-language-pack-ja",
+        "yzhang.markdown-all-in-one",
+        "bierner.markdown-mermaid",
+        "darkriszty.markdown-table-prettify",
+        "bpruitt-goddard.mermaid-markdown-syntax-highlighting",
+        "yzane.markdown-pdf",
+        "christian-kohler.path-intellisense",
+        "cssho.vscode-svgviewer",
+        "takanotume24.pdf",
+        "kisstkondoros.vscode-gutter-preview"
+    ]
+}

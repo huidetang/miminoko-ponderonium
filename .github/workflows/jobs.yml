@@ -1,0 +1,313 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build books.
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  SIZE: a6 # 対応はa4, a5, a6, b5, shinsho
+  # tateが縦組み、yokoが横組み
+  # config.ymlのdirectionの設定変更も忘れずに。
+  MUKI: tate
+  # ダウンロード時のファイル名接頭辞を指定する。
+  # 2バイト文字は使わないこと。
+  FILE_PREFIX: "Louisa-Complete-Works-Book-Template"
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  reviewdog-github-check:
+    name: reviewdogによる簡易校正
+    runs-on: ubuntu-latest
+    steps:
+        #reviewdogのアクション
+      - uses: reviewdog/action-setup@v1
+        with:
+          reviewdog_version: latest
+
+        #textlintを動かすためのnodeアクション
+      - uses: actions/setup-node@v4
+
+      - name: リポジトリのチェックアウト
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: cache-node-modules
+        #stepsが失敗(文章の乱れ)した場合でもcacheを取得するようにする
+        uses: pat-s/always-upload-cache@v2.1.3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            node-
+
+      - name: Install textlint
+        run:  'npm install --save-dev textlint textlint-rule-preset-smarthr textlint-rule-prh textlint-plugin-review'
+      
+      - name: Install dependent module
+        run: npm install
+
+      - name: Execute textlint
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npx textlint -f checkstyle chapter/*.re wiki/*.md README.md \
+          | reviewdog -f=checkstyle -name="textlint" -diff="git diff ${{ github.event.pull_request.base.ref }}" -reporter=github-pr-review -level="error"
+
+  epub:
+    # needs: reviewdog-github-check
+    name: EPUB版組
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/huideyeren/vivliostyle-review-docker:latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: リポジトリのチェックアウト
+        uses: actions/checkout@v4
+      - name: 現在時刻を取得
+        env: 
+          TZ: "Asia/Tokyo" # タイムゾーンを指定
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d_%H%M')"
+             # '%Y-%m-%d %H:%M'の部分を書き換えれば、任意の表示に変更できる。
+      - name: 現在時刻を確認
+        run: echo ${{ steps.date.outputs.date }} # 2022-01-03 10:42
+      - name: Node.jsのパッケージをインストール
+        run: pnpm install
+      - name: SCSSのコンパイル
+        run: pnpm run style:${{ env.SIZE }}-${{ env.MUKI }}-no-bleed
+      - name: Rubyのパッケージをインストール
+        run: bundle install
+      - name: Playwrightのインストール
+        run: ./node_modules/.bin/playwright install --with-deps
+      - name: EPUBの生成
+        run: REVIEW_CONFIG_FILE=config-epub-${{ env.MUKI }}.yml bundle exec rake epub
+      - name: 成果物のアップロード
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ format('{0}_{1}_{2}_{3}', env.FILE_PREFIX, 'epub', env.MUKI, steps.date.outputs.date) }}
+          path: book.epub
+
+  print-pdf:
+    # needs: reviewdog-github-check
+    name: 塗り足しのある印刷用PDF
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/huideyeren/vivliostyle-review-docker:latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: リポジトリのチェックアウト
+        uses: actions/checkout@v4
+      - name: 現在時刻を取得
+        env: 
+          TZ: "Asia/Tokyo" # タイムゾーンを指定
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d_%H%M')"
+              # '%Y-%m-%d %H:%M'の部分を書き換えれば、任意の表示に変更できる。
+      - name: 現在時刻を確認
+        run: echo ${{ steps.date.outputs.date }} # 2022-01-03 10:42
+      - name: Node.jsのパッケージをインストール
+        run: pnpm install
+      - name: SCSSのコンパイル
+        run: pnpm run style:${{ env.SIZE }}-${{ env.MUKI }}
+      - name: Rubyのパッケージをインストール
+        run: bundle install
+      - name: Pythonのセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: 画像の白黒化
+        run: | 
+          python -m pip install --upgrade pip 
+          python -m pip install anshitsu
+          pwd | python grayscaling.py >> .grayscaling.log
+      - name: 画像白黒化のログ確認
+        run: cat .grayscaling.log
+      - name: Playwrightのインストール
+        run: ./node_modules/.bin/playwright install --with-deps
+      - name: PDFの生成
+        run: REVIEW_CONFIG_FILE=config-print-${{ env.MUKI }}.yml REVIEW_VSCLI_USESANDBOX=true REVIEW_VSCLI_GRAYSCALE=true REVIEW_VSCLI_OPTIONS="--timeout 900" bundle exec rake vivliostyle
+      - name: 成果物のアップロード
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ format('{0}_{1}_{2}_{3}', env.FILE_PREFIX, 'print-pdf', env.MUKI, steps.date.outputs.date) }}
+          path: book.pdf
+
+  print-pdf-no-bleed:
+    # needs: reviewdog-github-check
+    name: 塗り足しのない印刷用PDF
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/huideyeren/vivliostyle-review-docker:latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: リポジトリのチェックアウト
+        uses: actions/checkout@v4
+      - name: 現在時刻を取得
+        env: 
+          TZ: "Asia/Tokyo" # タイムゾーンを指定
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d_%H%M')"
+              # '%Y-%m-%d %H:%M'の部分を書き換えれば、任意の表示に変更できる。
+      - name: 現在時刻を確認
+        run: echo ${{ steps.date.outputs.date }} # 2022-01-03 10:42
+      - name: Node.jsのパッケージをインストール
+        run: pnpm install
+      - name: SCSSのコンパイル
+        run: pnpm run style:${{ env.SIZE }}-${{ env.MUKI }}-no-bleed
+      - name: Rubyのパッケージをインストール
+        run: bundle install
+      - name: Pythonのセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: 画像の白黒化
+        run: | 
+          python -m pip install --upgrade pip 
+          python -m pip install anshitsu
+          pwd | python grayscaling.py >> .grayscaling.log
+      - name: 画像白黒化のログ確認
+        run: cat .grayscaling.log
+      - name: Playwrightのインストール
+        run: ./node_modules/.bin/playwright install --with-deps
+      - name: PDFの生成
+        run: REVIEW_CONFIG_FILE=config-print-${{ env.MUKI }}.yml EVIEW_VSCLI_USESANDBOX=true REVIEW_VSCLI_GRAYSCALE=true bundle exec rake vivliostyle
+      - name: 成果物のアップロード
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ format('{0}_{1}_{2}_{3}', env.FILE_PREFIX, 'print-pdf-no-bleed', env.MUKI, steps.date.outputs.date) }}
+          path: book.pdf
+
+  ebook-pdf:
+    # needs: reviewdog-github-check
+    name: 電子書籍用PDF
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/huideyeren/vivliostyle-review-docker:latest
+    steps:
+      - name: リポジトリのチェックアウト
+        uses: actions/checkout@v4
+      - name: 現在時刻を取得
+        env: 
+          TZ: "Asia/Tokyo" # タイムゾーンを指定
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d_%H%M')"
+              # '%Y-%m-%d %H:%M'の部分を書き換えれば、任意の表示に変更できる。
+      - name: 現在時刻を確認
+        run: echo ${{ steps.date.outputs.date }} # 2022-01-03 10:42
+      - name: Node.jsのパッケージをインストール
+        run: pnpm install
+      - name: SCSSのコンパイル
+        run: pnpm run style:${{ env.SIZE }}-${{ env.MUKI }}-no-bleed
+      - name: Rubyのパッケージをインストール
+        run: bundle install
+      - name: Playwrightのインストール
+        run: ./node_modules/.bin/playwright install --with-deps
+      - name: PDFの生成
+        run: REVIEW_CONFIG_FILE=config-ebook-${{ env.MUKI }}.yml REVIEW_VSCLI_USESANDBOX=true REVIEW_VSCLI_OPTIONS="--timeout 900" bundle exec rake vivliostyle
+      - name: 成果物のアップロード
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ format('{0}_{1}_{2}_{3}', env.FILE_PREFIX, 'ebook-pdf', env.MUKI, steps.date.outputs.date) }}
+          path: book.pdf
+
+  udonbook:
+    # needs: reviewdog-github-check
+    name: UDON Book用画像
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/huideyeren/vivliostyle-review-docker:latest
+    steps:
+      - name: リポジトリのチェックアウト
+        uses: actions/checkout@v4
+      - name: 現在時刻を取得
+        env: 
+          TZ: "Asia/Tokyo" # タイムゾーンを指定
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d_%H%M')"
+              # '%Y-%m-%d %H:%M'の部分を書き換えれば、任意の表示に変更できる。
+      - name: 現在時刻を確認
+        run: echo ${{ steps.date.outputs.date }} # 2022-01-03 10:42
+      - name: Node.jsのパッケージをインストール
+        run: pnpm install
+      - name: SCSSのコンパイル
+        run: pnpm run style:${{ env.SIZE }}-${{ env.MUKI }}-udonbook
+      - name: Rubyのパッケージをインストール
+        run: bundle install
+      - name: Playwrightのインストール
+        run: ./node_modules/.bin/playwright install --with-deps
+      - name: PDFの生成
+        run: REVIEW_CONFIG_FILE=config-udonbook-${{ env.MUKI }}.yml REVIEW_VSCLI_USESANDBOX=true REVIEW_VSCLI_OPTIONS="--timeout 900" bundle exec rake vivliostyle
+      - name: 画像の生成
+        run: mkdir distimages && cp book.pdf images/frontcover.png images/backcover.png ./distimages && cd ./distimages && pdftoppm -png book.pdf dist -scale-to-x 726 -scale-to-y 1024 && cd .. && ls -la ./distimages
+      - name: 成果物のアップロード
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ format('{0}_{1}_{2}_{3}', env.FILE_PREFIX, 'udonbook-png', env.MUKI, steps.date.outputs.date) }}
+          path: ./distimages/*.png
+
+  # paper:
+  #   # 校正ツールによるチェックが通らないとダメにするにはチェックを外す
+  #   # needs: reviewdog-github-check
+  #   name: 旧LaTeX版PDF
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: ghcr.io/huideyeren/review-docker:latest
+  #   steps:
+  #     - name: リポジトリのチェックアウト
+  #       uses: actions/checkout@v4
+  #     - name: 現在時刻の取得
+  #       env: 
+  #         TZ: "Asia/Tokyo" # タイムゾーンを指定
+  #       id: date
+  #       run: echo "::set-output name=date::$(date +'%Y-%m-%d_%H%M')"
+  #             # '%Y-%m-%d %H:%M'の部分を書き換えれば、任意の表示に変更できる。
+  #     - name: 現在時刻を確認
+  #       run: echo ${{ steps.date.outputs.date }} # 2022-01-03 10:42
+  #     - name: Rubyのパッケージをインストール
+  #       run: bundle install
+  #     - name: Node.jsのパッケージをインストール
+  #       run: npm install
+  #     - name: Playwrightのインストール
+  #       run: ./node_modules/.bin/playwright install
+  #     - name: pdfcropコマンドを使えるようにする
+  #       run: apt install texlive-extra-utils
+  #     - name: PlantUMLのコピー
+  #       run: cp /java/plantuml.jar .
+  #     - name: ツールのチェック
+  #       run: dot -V && blockdiag --version && java -jar plantuml.jar -version
+  #     - name: PlantUMLを図に変換する
+  #       run: pwd | bash ./plantuml.sh >> .plantuml.log
+  #     - name: PlantUMLの変換ログを確認する
+  #       run: cat .plantuml.log
+  #     - name: SVGをPDFに変換する
+  #       run: pwd | python3 svg.py >> .svg.log
+  #     - name: SVGをPDFに変換したときのログを確認する
+  #       run: cat .svg.log
+  #     - name: MermaidのPNG化
+  #       run: ./mmdtopng.sh images/*.mermaid
+  #     - name: 画像の白黒化
+  #       run: pwd | python3 grayscaling.py >> .grayscaling.log
+  #     - name: 画像白黒化のログ確認
+  #       run: cat .grayscaling.log
+  #     - name: PDFの生成
+  #       run: REVIEW_CONFIG_FILE=config-print-pdf.yml bundle exec rake pdf
+  #     - name: 成果物のアップロード
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: ${{ format('{0}_{1}_{2}_{3}', env.FILE_PREFIX, 'latex-pdf', env.MUKI, steps.date.outputs.date) }}
+  #         path: book.pdf
+

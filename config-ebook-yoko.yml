@@ -1,0 +1,23 @@
+# EPUB・電子書籍PDF用設定ファイル
+# 元々の設定ファイルから項目を継承する
+inherit: ["config.yml"]
+
+# 横書き
+direction: "ltr"
+
+# 表紙を作る
+cover: cover.xhtml
+
+# 裏表紙を作る
+backcover: backcover.xhtml
+
+# 大扉は画像で作る
+# XHTMLなので、編集すれば自前の大扉が入る
+titlefile: title.xhtml
+
+# 奥付は自作したXMTMLファイルを使う
+colophon: colophon.xhtml
+
+# 著者紹介は自作したXMTMLファイルを使う
+profile: profile.xhtml
+profiletitle: 著者紹介

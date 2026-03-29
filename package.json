@@ -1,0 +1,56 @@
+{
+  "name": "inokashira_review_template",
+  "version": "1.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "textlint *.re",
+    "style:a5-tate": "sass ./sass/vivliostyle-a5-tate.scss style.css",
+    "style:a4-tate": "sass ./sass/vivliostyle-a4-tate.scss style.css",
+    "style:a6-tate": "sass ./sass/vivliostyle-a6-tate.scss style.css",
+    "style:b5-tate": "sass ./sass/vivliostyle-b5-tate.scss style.css",
+    "style:shinsho-tate": "sass ./sass/vivliostyle-shinsho-tate.scss style.css",
+    "style:a5-tate-no-bleed": "sass ./sass/vivliostyle-a5-tate-no-bleed.scss style.css",
+    "style:a4-tate-no-bleed": "sass ./sass/vivliostyle-a4-tate-no-bleed.scss style.css",
+    "style:a6-tate-no-bleed": "sass ./sass/vivliostyle-a6-tate-no-bleed.scss style.css",
+    "style:a6-tate-udonbook": "sass ./sass/vivliostyle-a6-tate-udonbook.scss style.css",
+    "style:b5-tate-no-bleed": "sass ./sass/vivliostyle-b5-tate-no-bleed.scss style.css",
+    "style:shinsho-tate-no-bleed": "sass ./sass/vivliostyle-shinsho-tate-no-bleed.scss style.css",
+    "style:a5-yoko": "sass ./sass/vivliostyle-a5-yoko.scss style.css",
+    "style:a4-yoko": "sass ./sass/vivliostyle-a4-yoko.scss style.css",
+    "style:a6-yoko": "sass ./sass/vivliostyle-a6-yoko.scss style.css",
+    "style:b5-yoko": "sass ./sass/vivliostyle-b5-yoko.scss style.css",
+    "style:a5-yoko-no-bleed": "sass ./sass/vivliostyle-a5-yoko-no-bleed.scss style.css",
+    "style:a4-yoko-no-bleed": "sass ./sass/vivliostyle-a4-yoko-no-bleed.scss style.css",
+    "style:a6-yoko-no-bleed": "sass ./sass/vivliostyle-a6-yoko-no-bleed.scss style.css",
+    "style:b5-yoko-no-bleed": "sass ./sass/vivliostyle-b5-yoko-no-bleed.scss style.css",
+    "style": "npm run style:a6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:huidetang/XiandaiFenshuTemplate.git"
+  },
+  "author": "Louisa-charlotte Inokashirashika",
+  "license": "CC-BY-4.0",
+  "homepage": "https://github.com/huidetang/XiandaiFenshuTemplate",
+  "devDependencies": {
+    "@mermaid-js/mermaid-cli": "^11.4.2",
+    "@textlint/textlint-plugin-text": "^14.6.0",
+    "@vivliostyle/cli": "^8.20.0",
+    "sass": "^1.87.0",
+    "textlint": "^14.6.0",
+    "textlint-filter-rule-comments": "^1.2.2",
+    "textlint-plugin-review": "^0.4.1",
+    "textlint-rule-common-misspellings": "^1.0.1",
+    "textlint-rule-general-novel-style-ja": "^1.3.0",
+    "textlint-rule-max-ten": "^5.0.0",
+    "textlint-rule-no-doubled-conjunctive-particle-ga": "^3.0.0",
+    "textlint-rule-no-dropping-the-ra": "^3.0.0",
+    "textlint-rule-preset-smarthr": "^1.35.0",
+    "textlint-rule-prh": "^6.1.0"
+  },
+  "dependencies": {
+    "playwright": "^1.52.0"
+  }
+}

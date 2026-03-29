@@ -1,0 +1,67 @@
+@use "../../variable/a6-tate-no-bleed";
+
+@charset "UTF-8";
+
+/* 著者紹介 */
+.profile {
+    font-size: 0.8em;
+    -webkit-writing-mode: a6-tate-no-bleed.$writing-mode;
+    -epub-writing-mode: a6-tate-no-bleed.$writing-mode;
+    writing-mode: a6-tate-no-bleed.$writing-mode;
+  
+    div.profile-content{
+        width: 100%;
+        -webkit-writing-mode: horizontal-tb;
+        -epub-writing-mode:   horizontal-tb;
+        writing-mode: horizontal-tb;
+        font-size: 7pt;
+
+        figure {
+            width: 120px !important;
+            float: top;
+            box-sizing: border-box;
+            writing-mode: horizontal-tb !important;
+            -webkit-writing-mode: horizontal-tb;
+            -epub-writing-mode: horizontal-tb;
+            margin-bottom: 20px;
+            margin-left: auto;
+            margin-right: auto;
+
+            & > img {
+            display: block;
+            width: 120px;
+            height: 120px;
+            box-sizing: border-box;
+            }
+
+            figcaption {
+            text-align: center;
+            font-size: 7pt;
+            line-height: 14pt;
+            margin-bottom: 4pt;
+            }
+        }
+        div.profile-text {
+            h2 {
+                text-indent: 0em;
+            }
+        }
+
+        dl {
+            width: 100%;
+            dt {
+                width: 20%;
+                font-weight: 700;
+                float: left;
+                &::after {
+                    content: ": ";
+                }
+            }
+
+            dd {
+                margin-left: 25%;
+                width: 80%;
+            }
+        }
+    }
+}

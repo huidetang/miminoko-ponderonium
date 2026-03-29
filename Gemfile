@@ -1,0 +1,13 @@
+source 'https://rubygems.org'
+
+gem 'rake'
+gem 'psych'
+gem 'rubyzip'
+gem 'mecab'
+gem 'nokogiri'
+gem 'review'
+gem 'rexml'
+gem 'math_ml'
+gem 'rubocop'
+gem 'pandoc2review'
+gem 'playwright-runner'

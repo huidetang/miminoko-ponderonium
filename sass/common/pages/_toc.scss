@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+/* 目次ページ */
+.toc {
+    page: toc;
+
+    ol {
+        list-style: none;
+        a {
+            text-decoration: none;
+        }
+        a::after {
+            content: target-counter(attr(href url), page);
+            text-combine-upright: all;
+            margin-inline-start: 2em;
+        }
+    }
+}
+
+@page toc {
+    @top-left {
+        content: none;
+    }
+    @top-right {
+        content: none;
+    }
+}

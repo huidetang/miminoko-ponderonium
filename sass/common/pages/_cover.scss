@@ -1,0 +1,36 @@
+@charset "UTF-8";
+
+/* 表紙ページ */
+.cover {
+    page: cover;
+  
+    & > img {
+        max-inline-size: 100%;
+        max-block-size: 100vb;
+        object-fit: contain;
+    }
+}
+  
+@page cover {
+    width: 100% !important;
+    height: 100% !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  
+    @top-left {
+        content: none;
+    }
+  
+    @top-right {
+        content: none;
+    }
+}
+
+/* 印刷用おまじない */
+@media print {
+    .cover {
+        content: none;
+    }
+}

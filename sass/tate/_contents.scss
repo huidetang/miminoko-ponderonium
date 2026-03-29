@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+@use '../common/contents-common';
+@use "../variable/a6-tate-no-bleed";
+
+/* 画像＋キャプション */
+div.image {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  max-width: a6-tate-no-bleed.$content-width;
+  max-height: a6-tate-no-bleed.$content-height;
+  box-sizing: border-box;
+  writing-mode: horizontal-tb;
+  -webkit-writing-mode: horizontal-tb;
+  -epub-writing-mode: horizontal-tb;
+
+  & > img {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: a6-tate-no-bleed.$content-width;
+    max-height: a6-tate-no-bleed.$content-height;
+  }
+
+  & > p.caption {
+    text-align: center;
+    font-size: 7pt;
+    line-height: 14pt;
+    margin-bottom: 4pt;
+    writing-mode: horizontal-tb;
+    -webkit-writing-mode: horizontal-tb;
+    -epub-writing-mode: horizontal-tb;
+
+    & > a {
+      border-right: none;
+      padding-right: 0;
+      border-bottom: 1px dashed;
+      padding-bottom: 3px;
+    }
+  }
+}
+
+/* リンク */
+a {
+  text-decoration: none;
+  border-right: 1px dashed;
+  padding-right: 3px;
+}
+

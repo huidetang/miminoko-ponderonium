@@ -1,0 +1,102 @@
+@use "../variable/a6-tate-no-bleed";
+
+@charset "UTF-8";
+
+html {
+  /* フォント */
+  font-family: "Yakumono", "IPAMincho", "Cica", serif;
+  font-weight: normal;
+  /* 行末揃え */
+  text-align: justify;
+  font-size: a6-tate-no-bleed.$base-font-size;
+  line-height: a6-tate-no-bleed.$base-line-height;
+  /* 約物の調整 */
+  text-spacing: space-first allow-end ideograph-alpha ideograph-numeric;
+}
+
+h1 {
+  /* フォント */
+  font-weight: bold;
+  /* フォントサイズ */
+  font-size: 1.35rem;
+  /* 字下げ */
+  text-indent: 0;
+  /* 直後の改ページ・改段禁止 */
+  break-after: avoid;
+  // 3行取り
+  line-height: a6-tate-no-bleed.$base-line-height * 3;
+}
+h1.short {
+  // タイトルが短い場合のスタイル
+  letter-spacing: 1em;
+}
+
+.without-subsection {
+  h1 {
+    padding-block-end: a6-tate-no-bleed.$base-line-height * 2;
+  }
+}
+
+h2 {
+  /* フォント */
+  font-weight: bold;
+  /* フォントサイズ */
+  font-size: 1.18rem;
+  /* 字下げ */
+  text-indent: 6em;
+  /* 直後の改ページ・改段禁止 */
+  break-after: avoid;
+  // 2行取り
+  line-height: a6-tate-no-bleed.$base-line-height * 2;
+}
+
+h1 + h2 {
+  // 1行空け
+  margin-block-start: a6-tate-no-bleed.$base-line-height;
+}
+
+h3 {
+  /* フォント */
+  font-weight: bold;
+  /* フォントサイズ */
+  font-size: 1rem;
+  /* 字下げ */
+  text-indent: 8em;
+  /* 直後の改ページ・改段禁止 */
+  break-after: avoid;
+  // 2行取り
+  line-height: a6-tate-no-bleed.$base-line-height * 2;
+}
+
+ruby > rt {
+  font-size: 50%;
+}
+
+p {
+  text-indent: 1em;
+  /* 段落先頭約物の調整、行末句読点ぶら下げあり */
+  hanging-punctuation: first allow-end;
+
+  &.noindent {
+    text-indent: 0;
+  }
+
+  &.center {
+    text-align: center;
+  }
+
+  &.flushright {
+    text-align: right;
+  }
+}
+
+/* 縦中横 */
+.tcy {
+  text-combine-upright: all;
+}
+
+/* 圏点（ゴマ） */
+em.sesame_dot {
+  font-style: normal;
+  text-emphasis-style: sesame;
+}

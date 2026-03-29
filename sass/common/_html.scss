@@ -1,0 +1,18 @@
+@use "../variable/a6-tate-no-bleed";
+
+@charset "UTF-8";
+
+html {
+  /* 組み方向 */
+  -webkit-writing-mode: a6-tate-no-bleed.$writing-mode;
+  -epub-writing-mode: a6-tate-no-bleed.$writing-mode;
+  writing-mode: a6-tate-no-bleed.$writing-mode;
+
+  orphans: 1;
+  widows: 1;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}

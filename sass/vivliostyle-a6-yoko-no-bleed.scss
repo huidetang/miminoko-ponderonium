@@ -1,0 +1,50 @@
+@charset "UTF-8";
+@import 'yoko/fonts';
+
+// 基本フォントサイズ
+$base-font-size: 8pt;
+// 基本行送り
+$base-line-height: 1.4rem;
+
+
+//組み方向
+$writing-mode: horizontal-tb;
+
+// 行数
+$lines: 15;
+// 1行あたり文字数
+$characters-per-line: 40;
+// 天
+$ten: 17mm;
+// 地
+$chi: 15mm;
+// 小口
+$koguchi: 12mm;
+// ノド
+$nodo: 18mm;
+
+//紙のサイズ
+$paper-size: a6;
+//塗り足しサイズ
+$bleed-size: 0;
+
+//紙の横幅
+$paper-width: 105mm;
+//紙の縦幅
+$paper-height: 148mm;
+//トンボ
+$marks: none;
+
+//コンテンツの横幅
+$content-width: $paper-width - $koguchi - $nodo;
+//コンテンツの縦幅
+$content-height: $paper-height - $ten - $chi;
+
+// ページのスタイル定義
+@import 'yoko/format';
+// タイポグラフィのスタイル定義
+@import 'yoko/typography';
+// コンテンツのスタイル定義
+@import 'yoko/contents';
+// シンタックスハイライト
+@import 'common/rouge';

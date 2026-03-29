@@ -1,0 +1,24 @@
+# 印刷PDF用設定ファイル
+# 元々の設定ファイルから項目を継承する
+inherit: ["config.yml"]
+
+# 印刷所の名前は設定しない
+
+# 表紙と裏表紙は作らない
+cover: false
+
+# 大扉は画像で作る
+titlefile: title.xhtml
+
+# 奥付は自作したXMTMLファイルを使う
+colophon: colophon.xhtml
+
+# 著者紹介は自作したXMTMLファイルを使う
+profile: profile.xhtml
+profiletitle: 著者紹介
+
+# 目次の章立ての部分にリンクを作らない
+chapterlink: null
+
+# 外部リンクを無効にする
+externallink: false

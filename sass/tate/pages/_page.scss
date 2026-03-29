@@ -1,0 +1,157 @@
+@use "../../variable/a6-tate-no-bleed";
+
+@charset "UTF-8";
+
+@page {
+    size: a6-tate-no-bleed.$paper-size;
+    bleed: a6-tate-no-bleed.$bleed-size;
+    // 行送り * 行数
+    width: a6-tate-no-bleed.$content-width;
+    // フォントサイズ * 文字数
+    height: a6-tate-no-bleed.$content-height;
+    // margin: auto;
+    margin-top: a6-tate-no-bleed.$ten;
+    margin-bottom: a6-tate-no-bleed.$chi;
+    marks: a6-tate-no-bleed.$marks;
+}
+
+@page :left {
+
+    margin-right: a6-tate-no-bleed.$nodo;
+    margin-left: a6-tate-no-bleed.$koguchi;
+  
+    @top-left {
+        /* 左上ノンブル、柱（タイトル文字列） */
+        content: counter(page) "　　" env(pub-title);
+        font-size: 5.5pt;
+        vertical-align: top;
+        margin-left: 3.75pt;
+        margin-top: 6mm;
+        -webkit-writing-mode: horizontal-tb;
+        -epub-writing-mode:   horizontal-tb;
+        writing-mode: horizontal-tb;
+    }
+  
+    @right-middle {
+        /* 隠しノンブル */
+        font-size: 4pt;
+        margin-right: -19mm !important;
+        padding: 2px;
+        white-space: pre;
+        -webkit-writing-mode: horizontal-tb;
+        -epub-writing-mode:   horizontal-tb;
+        writing-mode: horizontal-tb;
+        content: counter(page);
+    }
+  }
+
+@page :right {
+
+    margin-left: a6-tate-no-bleed.$nodo;
+    margin-right: a6-tate-no-bleed.$koguchi;
+  
+    @top-right {
+        /* 右上ノンブル、柱（出版物タイトル文字列） */
+        content: env(doc-title) "　　" counter(page);
+        font-size: 5.5pt;
+        vertical-align: top;
+        margin-right: 3.75pt;
+        margin-top: 6mm;
+        -webkit-writing-mode: horizontal-tb;
+        -epub-writing-mode:   horizontal-tb;
+        writing-mode: horizontal-tb;
+    }
+  
+    @left-middle {
+      /* 隠しノンブル */
+      font-size: 4pt;
+      margin-left: -19mm !important;
+      padding: 2px;
+      white-space: pre;
+      -webkit-writing-mode: horizontal-tb;
+      -epub-writing-mode:   horizontal-tb;
+      writing-mode: horizontal-tb;
+      content: counter(page);
+    }
+}
+
+@page :first { 
+    width: 100% !important;
+    height: 100% !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  
+    @top-left {
+        content: none;
+    }
+  
+    @top-right {
+        content: none;
+    }
+
+    @right-middle {
+        /* 隠しノンブル */
+        font-size: 4pt;
+        margin-right: -19mm !important;
+        padding: 2px;
+        white-space: pre;
+        -webkit-writing-mode: horizontal-tb;
+        -epub-writing-mode:   horizontal-tb;
+        writing-mode: horizontal-tb;
+        content: counter(page);
+    }
+
+    @left-middle {
+        /* 隠しノンブル */
+        font-size: 4pt;
+        margin-left: -19mm !important;
+        padding: 2px;
+        white-space: pre;
+        -webkit-writing-mode: horizontal-tb;
+        -epub-writing-mode:   horizontal-tb;
+        writing-mode: horizontal-tb;
+        content: counter(page);
+    }
+
+    img {
+        max-inline-size: 100%;
+        max-block-size: 100vb;
+        object-fit: contain;
+    }
+  }
+  
+  @page :last {
+    @top-left {
+        content: none;
+    }
+  
+    @top-right {
+        content: none;
+    }
+
+    @right-middle {
+        /* 隠しノンブル */
+        font-size: 4pt;
+        margin-right: -19mm !important;
+        padding: 2px;
+        white-space: pre;
+        -webkit-writing-mode: horizontal-tb;
+        -epub-writing-mode:   horizontal-tb;
+        writing-mode: horizontal-tb;
+        content: counter(page);
+    }
+
+    @left-middle {
+        /* 隠しノンブル */
+        font-size: 4pt;
+        margin-left: -19mm !important;
+        padding: 2px;
+        white-space: pre;
+        -webkit-writing-mode: horizontal-tb;
+        -epub-writing-mode:   horizontal-tb;
+        writing-mode: horizontal-tb;
+        content: counter(page);
+    }
+}
