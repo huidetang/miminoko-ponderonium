@@ -1,22 +1,24 @@
 @charset "UTF-8";
 
+@use "../../variable/a5-yoko-no-bleed";
+
 @page {
-    size: $paper-size;
-    bleed: $bleed-size;
+    size: a5-yoko-no-bleed.$paper-size;
+    bleed: a5-yoko-no-bleed.$bleed-size;
     // 行送り * 行数
-    width: $content-width;
+    width: a5-yoko-no-bleed.$content-width;
     // フォントサイズ * 文字数
-    height: $content-height;
+    height: a5-yoko-no-bleed.$content-height;
     // margin: auto;
-    margin-top: $ten;
-    margin-bottom: $chi;
-    marks: $marks;
+    margin-top: a5-yoko-no-bleed.$ten;
+    margin-bottom: a5-yoko-no-bleed.$chi;
+    marks: a5-yoko-no-bleed.$marks;
 }
 
 @page :left {
   
-    margin-right: $nodo;
-    margin-left: $koguchi;
+    margin-right: a5-yoko-no-bleed.$nodo;
+    margin-left: a5-yoko-no-bleed.$koguchi;
   
     @top-left {
         /* 左上ノンブル、柱（タイトル文字列） */
@@ -45,8 +47,8 @@
 
 @page :right {
 
-    margin-left: $nodo;
-    margin-right: $koguchi;
+    margin-left: a5-yoko-no-bleed.$nodo;
+    margin-right: a5-yoko-no-bleed.$koguchi;
 
     @top-right {
         /* 右上ノンブル、柱（出版物タイトル文字列） */
@@ -90,18 +92,31 @@
     }
   
     img {
-        max-inline-size: 100%;
-        max-block-size: 100vb;
+        margin: auto !important;
+        width: 100%;
         object-fit: contain;
     }
 }
   
 @page :last {
+    width: 100% !important;
+    height: 100% !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  
     @top-left {
         content: none;
     }
   
     @top-right {
         content: none;
+    }
+  
+    img {
+        margin: auto !important;
+        width: 100%;
+        object-fit: contain;
     }
 }

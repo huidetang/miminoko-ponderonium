@@ -6,20 +6,23 @@ inherit: ["config.yml"]
 direction: "ltr"
 
 # 印刷所の名前を設定する
-prt: ○○印刷所
+prt: 自宅のプリンタ
 
-# 表紙と裏表紙は作らない
-cover: false
+# 表紙を作る
+cover: cover.xhtml
 
-# 大扉は画像で作る
-titlefile: title.xhtml
+# 裏表紙を作る
+backcover: backcover.xhtml
 
-# 奥付は自作したXMTMLファイルを使う
-colophon: colophon.xhtml
+# 大扉は作らない
+titlepage: false
+
+# 奥付は作らない
+# colophon: colophon.xhtml
 
 # 著者紹介は自作したXMTMLファイルを使う
-profile: profile.xhtml
-profiletitle: 著者紹介
+# profile: profile.xhtml
+# profiletitle: 著者紹介
 
 # 目次の章立ての部分にリンクを作らない
 chapterlink: null

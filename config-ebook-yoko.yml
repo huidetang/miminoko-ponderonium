@@ -13,11 +13,11 @@ backcover: backcover.xhtml
 
 # 大扉は画像で作る
 # XHTMLなので、編集すれば自前の大扉が入る
-titlefile: title.xhtml
+titlepage: false
 
 # 奥付は自作したXMTMLファイルを使う
-colophon: colophon.xhtml
+# colophon: colophon.xhtml
 
 # 著者紹介は自作したXMTMLファイルを使う
-profile: profile.xhtml
-profiletitle: 著者紹介
+# profile: profile.xhtml
+# profiletitle: 著者紹介

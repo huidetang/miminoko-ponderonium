@@ -1,24 +1,24 @@
-@use "../../variable/a6-tate-no-bleed";
-
 @charset "UTF-8";
 
+@use "../../variable/a6-tate";
+
 @page {
-    size: a6-tate-no-bleed.$paper-size;
-    bleed: a6-tate-no-bleed.$bleed-size;
+    size: a5-yoko-no-bleed.$paper-size;
+    bleed: a5-yoko-no-bleed.$bleed-size;
     // 行送り * 行数
-    width: a6-tate-no-bleed.$content-width;
+    width: a5-yoko-no-bleed.$content-width;
     // フォントサイズ * 文字数
-    height: a6-tate-no-bleed.$content-height;
+    height: a5-yoko-no-bleed.$content-height;
     // margin: auto;
-    margin-top: a6-tate-no-bleed.$ten;
-    margin-bottom: a6-tate-no-bleed.$chi;
-    marks: a6-tate-no-bleed.$marks;
+    margin-top: a5-yoko-no-bleed.$ten;
+    margin-bottom: a5-yoko-no-bleed.$chi;
+    marks: a5-yoko-no-bleed.$marks;
 }
 
 @page :left {
 
-    margin-right: a6-tate-no-bleed.$nodo;
-    margin-left: a6-tate-no-bleed.$koguchi;
+    margin-right: a5-yoko-no-bleed.$nodo;
+    margin-left: a5-yoko-no-bleed.$koguchi;
   
     @top-left {
         /* 左上ノンブル、柱（タイトル文字列） */
@@ -47,8 +47,8 @@
 
 @page :right {
 
-    margin-left: a6-tate-no-bleed.$nodo;
-    margin-right: a6-tate-no-bleed.$koguchi;
+    margin-left: a5-yoko-no-bleed.$nodo;
+    margin-right: a5-yoko-no-bleed.$koguchi;
   
     @top-right {
         /* 右上ノンブル、柱（出版物タイトル文字列） */
