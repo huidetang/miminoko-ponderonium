@@ -16,10 +16,10 @@ on:
   workflow_dispatch:
 
 env:
-  SIZE: a6 # 対応はa4, a5, a6, b5, shinsho
+  SIZE: a5 # 対応はa4, a5, a6, b5, shinsho
   # tateが縦組み、yokoが横組み
   # config.ymlのdirectionの設定変更も忘れずに。
-  MUKI: tate
+  MUKI: yoko
   # ダウンロード時のファイル名接頭辞を指定する。
   # 2バイト文字は使わないこと。
   FILE_PREFIX: "Louisa-Complete-Works-Book-Template"
