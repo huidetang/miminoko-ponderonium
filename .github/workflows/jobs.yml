@@ -244,7 +244,7 @@ jobs:
       - name: Node.jsのパッケージをインストール
         run: pnpm install
       - name: SCSSのコンパイル
-        run: pnpm run style:${{ env.SIZE }}-${{ env.MUKI }}-udonbook
+        run: pnpm run style:${{ env.SIZE }}-${{ env.MUKI }}
       - name: Rubyのパッケージをインストール
         run: bundle install
       - name: Playwrightのインストール
