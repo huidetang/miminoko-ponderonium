@@ -1,13 +1,87 @@
 @charset "UTF-8";
 
+@use "../../variable/a5-yoko-no-bleed";
+
 /* 表紙ページ */
 .cover {
     page: cover;
+    -webkit-writing-mode: horizontal-tb;
+    -epub-writing-mode:   horizontal-tb;
+    writing-mode: horizontal-tb;
   
-    & > img {
-        max-inline-size: 100%;
-        max-block-size: 100vb;
-        object-fit: contain;
+    & > .cover-content {
+        width: a5-yoko-no-bleed.$paper-width - a5-yoko-no-bleed.$nodo - a5-yoko-no-bleed.$nodo;
+        height: a5-yoko-no-bleed.$paper-height - a5-yoko-no-bleed.$ten - a5-yoko-no-bleed.$chi;
+        margin-left: a5-yoko-no-bleed.$nodo;
+        margin-right: a5-yoko-no-bleed.$nodo;
+        margin-top: a5-yoko-no-bleed.$ten;
+        margin-bottom: a5-yoko-no-bleed.$chi;
+        break-before: avoid;
+        break-after: avoid;
+        break-inside: avoid;
+        -webkit-writing-mode: horizontal-tb;
+        -epub-writing-mode:   horizontal-tb;
+        writing-mode: horizontal-tb;
+        display: flex;
+        flex-flow: column wrap;
+        padding-bottom: 15%;
+
+        & > .title-content {
+            width: 95%;
+            break-before: avoid;
+            break-after: avoid;
+            break-inside: avoid;
+            -webkit-writing-mode: horizontal-tb;
+            -epub-writing-mode:   horizontal-tb;
+            writing-mode: horizontal-tb;
+            align-self: center;
+
+            h1.title {
+                margin-top: 5em !important;
+                font-size: 2em !important;
+                text-align: center !important;
+                line-height: a5-yoko-no-bleed.$base-line-height !important;
+
+                & > span.subtitle {
+                    font-size: 0.7em;
+                }
+            }
+        }
+
+        & > .author-content {
+            width: 95%;
+            break-before: avoid;
+            break-after: avoid;
+            break-inside: avoid;
+            -webkit-writing-mode: horizontal-tb;
+            -epub-writing-mode:   horizontal-tb;
+            writing-mode: horizontal-tb;
+            align-self: center;
+
+            & > p {
+                font-size: 1.33em;
+                margin-top: 18rem;
+                text-align: center;
+            }
+        }
+
+        & > .publisher-content {
+            width: 95%;
+            break-before: avoid;
+            break-after: avoid;
+            break-inside: avoid;
+            text-align: center;
+            -webkit-writing-mode: horizontal-tb;
+            -epub-writing-mode:   horizontal-tb;
+            writing-mode: horizontal-tb;
+            align-self: center;
+
+            & > p {
+                font-size: 1.33em;
+                margin-top: 3em;
+                text-align: center;
+            }
+        }
     }
 }
   

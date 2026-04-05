@@ -129,27 +129,27 @@
     content: none;
   }
 
-  @right-middle {
-    /* 隠しノンブル */
-    font-size: 4pt;
-    margin-right: -19mm !important;
-    padding: 2px;
-    white-space: pre;
-    -webkit-writing-mode: horizontal-tb;
-    -epub-writing-mode:   horizontal-tb;
-    writing-mode: horizontal-tb;
-    content: counter(page);
-}
+//   @right-middle {
+//     /* 隠しノンブル */
+//     font-size: 4pt;
+//     margin-right: -19mm !important;
+//     padding: 2px;
+//     white-space: pre;
+//     -webkit-writing-mode: horizontal-tb;
+//     -epub-writing-mode:   horizontal-tb;
+//     writing-mode: horizontal-tb;
+//     content: counter(page);
+// }
 
-@left-middle {
-    /* 隠しノンブル */
-    font-size: 4pt;
-    margin-left: -19mm !important;
-    padding: 2px;
-    white-space: pre;
-    -webkit-writing-mode: horizontal-tb;
-    -epub-writing-mode:   horizontal-tb;
-    writing-mode: horizontal-tb;
-    content: counter(page);
-}
+// @left-middle {
+//     /* 隠しノンブル */
+//     font-size: 4pt;
+//     margin-left: -19mm !important;
+//     padding: 2px;
+//     white-space: pre;
+//     -webkit-writing-mode: horizontal-tb;
+//     -epub-writing-mode:   horizontal-tb;
+//     writing-mode: horizontal-tb;
+//     content: counter(page);
+// }
 }

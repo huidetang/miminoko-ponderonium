@@ -12,7 +12,7 @@ prt: 自宅のプリンタ
 cover: cover.xhtml
 
 # 裏表紙を作る
-backcover: backcover.xhtml
+backcover: colophon.xhtml
 
 # 大扉は作らない
 titlepage: false

@@ -9,7 +9,7 @@ direction: "ltr"
 cover: cover.xhtml
 
 # 裏表紙を作る
-backcover: backcover.xhtml
+backcover: colophon.xhtml
 
 # 大扉は画像で作る
 # XHTMLなので、編集すれば自前の大扉が入る
